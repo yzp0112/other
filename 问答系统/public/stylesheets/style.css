@@ -1,0 +1,48 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #fff;
+}
+.questions{
+    padding-top: 30px;
+}
+.m-header{
+  width:100%;
+}
+.m-header a:hover{
+    color:#fff;
+}
+.m-container{
+  padding-top: 20px;
+}
+.q-list a{
+  color: #333;
+}
+.media img{
+    width: 64px;
+    height: 64px;
+}
+
+.glyphicon{
+    cursor: pointer;
+}
+
+.media-object{
+    border-radius: 50%;
+}
+
+.media-footing{
+    padding-top: 5px;
+    color: #888;
+}
+
+.media[onclick]{
+    cursor: pointer;
+}
+
+.media-child{
+    padding-left: 20px;
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>问答系统</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/style.css">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header  m-header">
+                <a class="navbar-brand" href="javascript:void(0)">问答系统</a>
+                <div class="pull-right">
+                    <a class="btn btn-lg" href="login.html">
+                        <span class="glyphicon glyphicon-user"></span> 登陆
+                    </a>
+                    <a href="ask.html" class="btn btn-lg">
+                        <span class="glyphicon glyphicon-plus"></span> 提问
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container questions">
+        <div id="questionList">
+
+        </div>
+
+    </div>
+    <script src="jquery/jquery.min.js"></script>
+    <script src="jquery/jquery.cookie.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="javascripts/template.js"></script>
+    <script src="javascripts/index.js"></script>
+    <script id="tmlQuestionList" type="text/html">
+        {{each qList}}
+        <div class="media" onclick="location.href='/questions/answer/{{$value.q}}'">
+            <div class="media-left">
+                <a>
+                    <img class="media-object" src="{{$value.avatar}}" onerror="this.src='/images/q.png'">
+                </a>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">{{$value.nickName}}</h4>
+                {{$value.content}}
+                <div class="media-footing">
+                    {{$value.qDate}}
+                </div>
+            </div>
+        </div>
+        {{each $value.answers as a}}
+        <div class="media media-child">
+                <div class="media-body">
+                    <h4 class="media-heading">{{a.nickName}}</h4>
+                    {{a.content}}
+                    <div class="media-footing">
+                        {{a.aDate}}
+                    </div>
+                </div>
+                <div class="media-right">
+                    <a>
+                        <img class="media-object" src="{{a.avatar}}" onerror="this.src='/images/a.png'">
+                    </a>
+                </div>
+            </div>
+        {{/each}}
+        <hr>        
+        {{/each}}
+    </script>
+</body>
+
+</html>
