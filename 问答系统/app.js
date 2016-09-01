@@ -34,52 +34,38 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use('/', routes);
 app.use('/users', require('./routes/users'));
-app.use('/questions', require('./routes/questions'));
-app.use('/common', require('./routes/common/common'));
+app.use('/questions',require('./routes/questions'));
+app.use('/common',require('./routes/common/common'));
 
-function first(req, res, next) {
-  console.log("first:" + req.query.id);
-  if (req.query.id == "1") {
+function first(req,res,next){
+  console.log("first:"+req.query.id);
+  if(req.query.id == "1"){
     res.send("运行到1");
   }
-  else {
+  else{
     next();
-  }
+  } 
 }
-function second(req, res, next) {
-  console.log("second:" + req.query.id);
-  if (req.query.id == "2") {
+function second(req,res,next){
+  console.log("second:"+req.query.id);
+  if(req.query.id == "2"){
     res.send("运行到2");
   }
-  else {
+  else{
     next();
-  }
+  } 
 }
-function third(req, res, next) {
-  console.log("third:" + req.query.id);
-  if (req.query.id == "3") {
+function third(req,res,next){
+  console.log("third:"+req.query.id);
+  if(req.query.id == "3"){
     res.send("运行到3");
   }
-  else {
+  else{
     next();
-  }
+  } 
 }
-
-/***
- * next是执行下一步操作的意思
- * 如果没有next了 那么就不再执行下一个调用，直接返回当前方法的处理结果
- */
-app.get("/map", first, second, third, function (req, res, next) {
-  if (req.query.id == "4") {
-    res.send("4----运行完成");
-  }
-  else {
-    next();
-  }
-}, function(req, res, next){
-
-  res.send("其他完成");
-
+app.get("/map",first,second,third,function(req,res,next){
+  res.send("运行完成");
 })
 
 // catch 404 and forward to error handler
@@ -115,6 +101,6 @@ app.get("/map", first, second, third, function (req, res, next) {
 
 
 // module.exports = app;
-app.listen(3000, function (req, res) {
+app.listen(3000,function(req,res){
   console.log("服务器运行中...");
 })

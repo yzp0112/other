@@ -52,10 +52,6 @@ router.get('/validateUserName', function (req, res, next) {
 /////引入自定义的时间处理模块
 var DateFun = require('../lib/date');
 
-///// 访问地址 /users/reg
-router.get('/reg',function(req,res){
-  res.render('reg.html',{title:"用户注册",isLogined:false});
-})
 
 /////注册页面post提交
 router.post('/reg', function (req, res, next) {
@@ -67,15 +63,30 @@ router.post('/reg', function (req, res, next) {
   user.nickName = '';
   user.avatar = '';
   user.regDate = myDate.formatDateTime();
-  fs.writeFile('./users/' + user.userName + '.json', JSON.stringify(user));
-  writeUserNameInCookie(user, res);
-  res.redirect("/users/userInfo");
+
+  //////在做post提交的时候 再次验证用户名是否已经存在
+  if (validateUserNameIsExist(user.userName)) {
+    res.json({ status: "n", msg: "用户名已存在" });
+  }
+  else {
+    try {
+      /////把用户注册信息写入文件 使用用户名作为文件名
+      fs.writeFile('./users/' + user.userName + '.json', JSON.stringify(user));
+      //console.log(user);
+
+      writeUserNameInCookie(user, res);
+
+      res.json({ status: "y", msg: "注册成功" });
+    }
+    catch (e) {
+      res.json({ status: "n", msg: "文件系统错误", data: e });
+    }
+  }
+
+
+
 })
 
-////登录页面 get
-router.get('/login',function(req,res){
-  res.render('login',{title:"用户登录",isLogined:false,error:""});
-})
 ////登陆页面post提交
 router.post('/login', function (req, res, next) {
   //console.log(req.body.userName);
@@ -85,45 +96,19 @@ router.post('/login', function (req, res, next) {
     var userInfo = JSON.parse(fs.readFileSync('./users/' + userName + '.json'));
     if (userInfo.pwd == req.body.pwd) {
       writeUserNameInCookie(userInfo, res);
-      res.redirect("/users/userInfo");
-      //res.json({ status: "y", msg: "登陆成功" });
+      res.json({ status: "y", msg: "登陆成功" });
     }
     else {
-      res.render('login',{title:"用户登录",isLogined:false,error:"密码错误"})
-      //res.json({ status: "n", msg: "密码错误" });
+      res.json({ status: "n", msg: "密码错误" });
     }
   }
   else {
-    res.render('login',{title:"用户登录",isLogined:false,error:"用户名不存在"})
-    //res.json({ status: "n", msg: "用户名不存在" });
+    res.json({ status: "n", msg: "用户名不存在" });
   }
 
   //req.body.userName
 })
 
-/**
- * 登陆判断
- * @param {any} req
- * @param {any} res
- * @param {any} next
- */
-function validateLogined(req,res,next){
-  if(req.cookies.userName){    
-    next();
-  }
-  else{
-    res.redirect("/login.html");
-  }
-}
-
-/***
- * 用户中心 get
- */
-router.get('/userInfo',validateLogined,function(req,res){
-  var fileName = './users/'+req.cookies.userName+'.json';
-  var userInfo = JSON.parse(fs.readFileSync(fileName));
-  res.render("userInfo",{title:"用户中心",isLogined:true,userInfo:userInfo});
-})
 router.post('/updateUserInfo', function (req, res) {
   if (req.cookies.userName) {
     try {

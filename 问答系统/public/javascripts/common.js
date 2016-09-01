@@ -38,24 +38,24 @@ var userNameRule = $("#hfPageName").val() == "reg" ? {
 
 $(function () {
     //////通过js代码设置页面导航中a标签的href属性
-    // $(".navbar a").first().attr("href", "/index.html");
-    // $(".navbar-header .pull-right a").each(function (index) {
-    //     if ($.cookie().userName) {
-    //         if (index == 0) {
-    //             $(this).attr("href", "/userInfo.html");
-    //             $(this).html('<span class="glyphicon glyphicon-user"></span>个人中心');
-    //             $(".navbar-header .pull-right a").first().css("float", "right");
-    //             $(".navbar-header .pull-right a").first().attr("data-toggle", "dropdown");
-    //             $(".navbar-header .pull-right").append($('<ul class="dropdown-menu">'
-    //                 + '<li><a href="/userInfo.html">个人中心</a></li>'
-    //                 + '<li><a href="javascript:void(0)" onclick="logOut()">退出</a></li>'
-    //                 + '</ul>'));
-    //         }
-    //     }
-    //     else {
-    //         $(this).attr("href", "/login.html");
-    //     }
-    // });
+    $(".navbar a").first().attr("href", "/index.html");
+    $(".navbar-header .pull-right a").each(function (index) {
+        if ($.cookie().userName) {
+            if (index == 0) {
+                $(this).attr("href", "/userInfo.html");
+                $(this).html('<span class="glyphicon glyphicon-user"></span>个人中心');
+                $(".navbar-header .pull-right a").first().css("float", "right");
+                $(".navbar-header .pull-right a").first().attr("data-toggle", "dropdown");
+                $(".navbar-header .pull-right").append($('<ul class="dropdown-menu">'
+                    + '<li><a href="/userInfo.html">个人中心</a></li>'
+                    + '<li><a href="javascript:void(0)" onclick="logOut()">退出</a></li>'
+                    + '</ul>'));
+            }
+        }
+        else {
+            $(this).attr("href", "/login.html");
+        }
+    });
 
     $("#mainForm").validate({
         rules: {
@@ -103,6 +103,29 @@ $(function () {
                 minlength: '回答内容最小长度为8个字',
                 maxlength: '回答内容最大长度为30个字'
             }
+        },
+        /////验证通过后执行的方法
+        submitHandler: function () {
+            $("#btnSubmit").attr("disabled", true); ////把提交按钮设置为disabled
+            ////提交到服务器端
+            /****
+             * $.post 参数一 请求地址，参数二 传递的数据，参数三 成功后回掉函数
+             */
+            $.post($("#mainForm").attr("action"), $("#mainForm").serialize(), function (res) {
+                console.log(res);
+                if (res.status == "y") {
+                    alert(res.msg);
+                    //$("#btnSubmit").removeAttr('disabled');
+                    /////获取页面中隐藏的跳转链接地址 实现页面跳转
+                    if ($("#rediretUrl").val()) {
+                        window.location.href = $("#rediretUrl").val();
+                    }
+                }
+                else {
+                    alert(res.msg);
+                    $("#btnSubmit").removeAttr('disabled');
+                }
+            })
         }
     });
 });
