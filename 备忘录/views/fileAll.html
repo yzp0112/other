@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0,maximum-scale=1.0">
+    <title>备忘录-{{path}}</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/lib/alert/css/alert.css">
+</head>
+<body>
+     <div id="app">
+       <a href="/">
+         <header>
+             备忘录-{{path}}
+         </header>
+       </a>
+        <main>
+            <div class="note-list">
+              {{each files}}
+                <div class="note-item">
+                    <a href="/notes/file/editor/{{path}}/{{$value.fileName}}">{{$value.content}}</a>
+                </div>
+                {{/each}}
+            </div>
+        </main>
+        <footer>
+            <a class="note-create-file" href="/notes/file/new/{{path}}"><img src="/images/new.jpg" alt="" /></a>
+        </footer>
+    </div>
+    <script src="/lib/jquery/jquery.min.js"></script>
+    <script src="/lib/alert/js/alert.js"></script>
+</body>
+</html>

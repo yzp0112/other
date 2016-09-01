@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0,maximum-scale=1.0">
+    <title>备忘录</title>
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="stylesheet" href="lib/alert/css/alert.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            备忘录
+        </header>
+        <main>
+            <div class="note-list">
+                <div class="note-item" v-for="dir in dirs">
+                    <a href="/notes/file/{{dir.dirName}}">{{dir.dirName}}</a>
+                    <div class="note-item-right">
+                        <span class="note-file-count">{{dir.fileCount}}</span>
+                        <img src="images/arrow.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <a class="note-create-dir">新建文件夹</a>
+        </footer>
+    </div>
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script src="lib/alert/js/alert.js"></script>
+    <script src="lib/vue.min.js"></script>
+    <script src="javascripts/index.js"></script>
+</body>
+</html>

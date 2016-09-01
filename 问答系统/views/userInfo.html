@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{include 'shared/header'}}
+</head>
+
+<body>
+    {{include 'shared/nav'}}
+    <div class="container m-container">
+        <form action="/users/updateUserInfo" method="post" id="mainForm" class="form-horizontal">
+            <div class="form-group">
+                <label for="nickName">昵称</label>
+                <input type="text" value="{{userInfo.nickName}}" class="form-control" id="nickName" name="nickName">
+            </div>
+            <div class="form-group">
+                <!--用于提交到服务器端的表单名称-->
+                <input type="hidden" name="avatar" value="{{userInfo.avatar}}" id="iAvatar">
+                <label for="avatar">头像</label>
+                <img id="imgCtrl" src="{{userInfo.avatar}}" class="thumbnail" style="cursor:pointer;width:100px;max-height:80px" onerror="this.src='/images/a.png'">
+            </div>
+            <div class="form-group">
+                <button id="btnSubmit" type="submit" class="btn btn-primary btn-block">提交</button>
+            </div>
+        </form>
+        <!--文件选择标签-->
+        <input type="file" style="width:0px;height:0px" id="selectFile">
+    </div>
+    {{include 'shared/footer'}}
+
+    <script src="/jquery/jquery.html5uploader.min.js"></script>
+    <script>
+    $("#imgCtrl").click(function () {
+        $("#selectFile").click();
+    });
+
+    ////html5Uploader 标准配置方法
+    $("#selectFile").html5Uploader({
+        name: "Filedata",
+        postUrl: "/common/file/uploadfile", ////图片上传的post提交地址
+        onSuccess: function (msg) { /////上传成功后的回调函数
+            //console.log(msg);
+            try {
+                var url = JSON.parse(msg.currentTarget.response).url;
+                $("#imgCtrl").attr("src", url); ////指定img控件的src属性
+                $("#iAvatar").val(url); /////服务器端接收时需要获取的标签
+            }
+            catch (e) {
+                console.log(e);
+            }
+        }
+    });
+    </script>
+</body>
+
+</html>
