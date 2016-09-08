@@ -18,13 +18,13 @@ function initNoteApp(req, res, next) {
     /////判断目录是否存在
     fs.exists('./notes', function (d) {
         if (d) {
-            console.log('目录已存在');
+            // console.log('目录已存在');
             next();
         }
         else {
             /////创建一个在项目根目录中创建一个notes目录
             fs.mkdirSync('./notes');
-            console.log('初始化目录完成');
+            // console.log('初始化目录完成');
             next();
         }
     })
