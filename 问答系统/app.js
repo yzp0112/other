@@ -26,33 +26,33 @@ app.use('/users', require('./routes/users'));
 app.use('/questions',require('./routes/questions'));
 app.use('/common',require('./routes/common/common'));
 
-function first(req,res,next){
-  console.log("first:"+req.query.id);
-  if(req.query.id == "1"){
-    res.send("运行到1");
-  }
-  else{
-    next();
-  } 
-}
-function second(req,res,next){
-  console.log("second:"+req.query.id);
-  if(req.query.id == "2"){
-    res.send("运行到2");
-  }
-  else{
-    next();
-  } 
-}
-function third(req,res,next){
-  console.log("third:"+req.query.id);
-  if(req.query.id == "3"){
-    res.send("运行到3");
-  }
-  else{
-    next();
-  } 
-}
+// function first(req,res,next){
+//   console.log("first:"+req.query.id);
+//   if(req.query.id == "1"){
+//     res.send("运行到1");
+//   }
+//   else{
+//     next();
+//   } 
+// }
+// function second(req,res,next){
+//   console.log("second:"+req.query.id);
+//   if(req.query.id == "2"){
+//     res.send("运行到2");
+//   }
+//   else{
+//     next();
+//   } 
+// }
+// function third(req,res,next){
+//   console.log("third:"+req.query.id);
+//   if(req.query.id == "3"){
+//     res.send("运行到3");
+//   }
+//   else{
+//     next();
+//   } 
+// }
 app.get("/map",first,second,third,function(req,res,next){
   res.send("运行完成");
 })
