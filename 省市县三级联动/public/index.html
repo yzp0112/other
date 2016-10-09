@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div ng-app="app" ng-controller="addressCtrl">
+
+        <!--<input type="text" ng-model="txtInput">
+        <ul>
+            <li ng-repeat="item in dataProvince | filter:txtInput">{{item.name}}</li>
+        </ul>-->
+
+
+
+        <select ng-model="selProvince" ng-change="provinceChange()" ng-options="item.name for item in dataProvince"></select>
+        <select ng-model="selCity" ng-change="cityChange()" ng-options="item.name for item in dataCity"></select>
+        <select ng-model="selArea" ng-options="item.DisName for item in dataArea"></select>
+    </div>
+    <script src="js/angular.min.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>
